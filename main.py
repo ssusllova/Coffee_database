@@ -2,16 +2,17 @@
 import sqlite3
 from PyQt5.QtWidgets import QApplication, QTableWidgetItem
 from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox
-from PyQt5 import uic
+from UI import Ui_MainWindow
+from addEditCoffeeForm import Ui_dialog
 
 
-class Coffee_db(QMainWindow):
+class Coffee_db(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.db_filename = 'coffee.sqlite'
+        self.db_filename = 'data/coffee.sqlite'
         self.db_rows = 0
         self.result = []
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.open_db()
         self.pushButton_add.clicked.connect(self.add_record)
         self.pushButton_change.clicked.connect(self.modify_record)
@@ -106,10 +107,10 @@ class Coffee_db(QMainWindow):
         QMessageBox.about(self, 'Сообщение', 'Запись удалена')
 
 
-class Rec(QDialog):
+class Rec(QDialog, Ui_dialog):
     def __init__(self, Coff):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self, Coff)
+        self.setupUi(self)
         self.rec = ()
 
     def return_record(self):
